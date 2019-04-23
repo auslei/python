@@ -18,24 +18,51 @@
                 <img src="https://pythonprogramming.net/static/images/mainlogo.png" width='44px' height='44px' />
             </a>
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onkeyup=myFunction() id='myInput'">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="checkbox" checked autocomplete="off"> Raw
+                    </label>
+                </div>                
             </form>
             </span>
         </nav>
+        <script>
+            function myFunction() {
+                // Declare variables 
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+            
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        } else {
+                        tr[i].style.display = "none";
+                        }
+                    } 
+                }
+            }
+        </script>
     </header>
     {% endblock %}
 </head>
 
 <body>
-    {% block body %}
+   
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" href="{{ url_for('dashboard')}}">Dash</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
@@ -43,16 +70,14 @@
             <li class="nav-item">
             <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
             </li>
-        </ul>
-        
+        </ul>        
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">{% include 'table.html' %}</div>
-        <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+        <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab"> {% block body %}{% endblock %}</div>
         <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">...</div>
         <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...</div>
     </div>
     
-    {% endblock %}
 </body>
 </html>

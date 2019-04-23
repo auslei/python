@@ -9,7 +9,22 @@
 
 <body>
   {% block body %}
-  {{ super() }}
+  <table class='table table-dark' id='myTable'>
+    <thead>
+      <tr>
+      {% for col in columns %}    
+        <th>{{col}}</th>
+      {% endfor %}
+    </tr>
+    {% for row in range(datalen)%}
+      <tr>
+      {% for col in range((columns|length)) %}
+      <td>{{ data.iloc[row,col] }}</td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+  </thead>
+  </table>
   {% endblock %}
 </body>
 

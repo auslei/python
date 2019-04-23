@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body%}
+<table class="table">
+    <thead>
+      <tr>
+        {%for col in columns%}
+            <th scope="col">col</th>
+        {%endfor}
+      </tr>
+    </thead>
+</table>
+
+{% endblock}
