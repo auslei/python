@@ -1,0 +1,1 @@
+__CONTENTS__ = {"table": [("Full", "/fulltable"),("Aggregated", "/agg_table")]}
