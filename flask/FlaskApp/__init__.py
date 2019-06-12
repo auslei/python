@@ -4,6 +4,8 @@ import pandas as pd
 
 app = Flask(__name__)
 
+contents = { "index" : [("Home", "/"),("dashboard", "/dashboard")]}
+
 @app.route('/')
 def homepage():
     #df = pd.DataFrame({"A": [1,2,3,4,5], "B": [6,7,8,9,10]})
