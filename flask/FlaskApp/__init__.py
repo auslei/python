@@ -1,21 +1,31 @@
 from flask import Flask, render_template
 import sys
 import pandas as pd
+from contents import __CONTENTS__
 
+# create flask app
 app = Flask(__name__)
 
+<<<<<<< HEAD
 contents = { "index" : [("Home", "/"),("dashboard", "/dashboard")]}
 
+=======
+# use only main menu with bootstrap tables to load contents.
+>>>>>>> d39dd90062d0440fd6fae561b61dbef7fa5604c2
 @app.route('/')
 def homepage():
-    #df = pd.DataFrame({"A": [1,2,3,4,5], "B": [6,7,8,9,10]})
     df = pd.read_csv("./static/data/googleplaystore.csv").sample(30)
-    return render_template("main.html", data=df, columns=df.columns, datalen=len(df))
+    return render_template("main.html", data=df, __CONTENTS__=__CONTENTS__)
 
-@app.route('/dashboard')
-def dashboard():
-    df = pd.DataFrame({"A": [1,2,3,4,5], "B": [6,7,8,9,10]})
-    return render_template("dashboard.html", data=df, columns=df.columns, datalen=len(df))
+# login path
+@app.route('/login/', methods=["GET","POST"])
+def login_page():
+    return render_template("login.html") 
+
+# error handling page
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("error.html", err=str(e))
 
 if __name__ == "__main__":
     app.run()
