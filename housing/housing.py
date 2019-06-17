@@ -133,4 +133,64 @@ encoder = OneHotEncoder()
 housing_category_1hot = encoder.fit_transform(housing_cat_encoded.reshape(-1,1))
 
 
+#%% [markdown]
+## Custom transformation
+from sklearn.base import BaseEstimator, TransformerMixin
+
+rooms_ix, bedrooms_ix, population_ix, household_ix = 3, 4, 5, 6
+
+# inheriting BaseEstimator and TransformerMixin
+class combinedAttributeAdder(BaseEstimator, TransformerMixin):
+
+    def __init__(self, add_bedrooms_per_room = True):
+        self.add_bedrooms_per_room = add_bedrooms_per_room
+    
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X, y=None):
+        rooms_per_household = X[:, rooms_ix] / X[:, household_ix]
+        population_per_household = X[:, population_ix] / X[:, household_ix]
+        if self.add_bedrooms_per_room:
+            bedrooms_per_room = X[:, bedrooms_ix] / X[:, rooms_ix]
+            return np.c_[X, rooms_per_household, population_per_household,
+                        bedrooms_per_room]
+        else:
+            return np.c_[X, rooms_per_household, population_per_household]
+ 
+attr_adder = combinedAttributeAdder(add_bedrooms_per_room=False)
+housing_extra_attribs = attr_adder.transform(housing.values)
+
+#%% [markdown]
+## Feature Scaling and pipeline
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+class DataFrameSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, attribute_names):
+        self.attribute_names = attribute_names
+    
+    def fit(self, X, y=None):
+        return X
+    
+    def transform(self, X, y=None):
+        return x[self.attribute_names].values
+
+num_attributes = list(housing_num)
+cat_attributes = ['ocean_proximity']
+
+num_pipeline = Pipeline([
+    ('selector', DataFrameSelector(num_attributes))
+    ('imputer', Imputer(strategy="median")),
+    ('attribs_adder', combinedAttributeAdder()),
+    ('std_scaler', StandardScaler())
+])
+
+cat_pipeline = Pipeline([
+    ('selector', DataFrameSelector(cat_attributes)),
+    ('cat_encoder', OneHotEncoder)
+])
+
+housing_num_tr = num_pipeline.fit_transform(housing_num)
+
 #%%
