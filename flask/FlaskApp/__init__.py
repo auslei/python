@@ -1,10 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, flash, request
 import sys
 import pandas as pd
 from contents import __CONTENTS__
 
 # create flask app
 app = Flask(__name__)
+app.secret_key = 'the random string'
 
 # use only main menu with bootstrap tables to load contents.
 @app.route('/')
@@ -15,6 +16,9 @@ def homepage():
 # login path
 @app.route('/login/', methods=["GET","POST"])
 def login_page():
+    if request.method == 'POST':
+        flash(request.form['username'])
+        flash(url_for('homepage'))
     return render_template("login.html") 
 
 # error handling page
