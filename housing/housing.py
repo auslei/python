@@ -229,3 +229,4 @@ housing_prepared = full_pipeline.fit_transform(housing)
 ## Select and training models
 
 from sklearn.linear_model import LinearRegression
+
