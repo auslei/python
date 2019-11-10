@@ -7,12 +7,8 @@ from contents import __CONTENTS__
 app = Flask(__name__)
 app.secret_key = 'the random string'
 
-<<<<<<< HEAD
 contents = { "index" : [("Home", "/"),("dashboard", "/dashboard")]}
 
-=======
-# use only main menu with bootstrap tables to load contents.
->>>>>>> d39dd90062d0440fd6fae561b61dbef7fa5604c2
 @app.route('/')
 def homepage():
     df = pd.read_csv("./static/data/googleplaystore.csv").sample(30)
