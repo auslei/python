@@ -27,7 +27,7 @@ def get_content(url):
         html = None
     return html
 
-#%% get all the new in the top news
+# get all the new in the top news
 def read_news(_base_url):
     import re
     regex = re.compile("story-block.*")    
@@ -53,5 +53,17 @@ def read_news(_base_url):
 
     return pd.DataFrame(stories)
 
-#%%
-df = read_news(_base_url)
+import os
+import pandas as pd
+
+def incrental_load(file_path, to_pickle = True):
+    if os.path.exists(file_path):
+        df1 = pd.read_pickle(file_path)
+        df2 = read_news(_base_url)
+        df = pd.concat([df1, df2])        
+    else:
+        df = read_news(_base_url)
+
+    if to_pickle:
+        df.to_pickle(file_path)
+    return df
