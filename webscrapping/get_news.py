@@ -2,6 +2,7 @@
 import urllib3
 from bs4 import BeautifulSoup
 from datetime import datetime
+import time
 
 _base_url = "https://www.news.com.au/"
 _headers = {        
@@ -28,7 +29,7 @@ def get_content(url):
     return html
 
 # get all the new in the top news
-def read_news(_base_url):
+def read_news(_base_url, sleep_time=10):
     import re
     regex = re.compile("story-block.*")    
 
@@ -49,6 +50,7 @@ def read_news(_base_url):
                 stories['timestamp'].append(f"{ts.txt} {ts.find('span', {'class': 'time'}).text}")
             else:
                 stories['timestamp'].append(datetime.now().strftime("Last updated %B %d, %Y %H:%M:%S AEDT"))
+            print(f"sleeping for {sleep_time} seconds...")
             
 
     return pd.DataFrame(stories)
