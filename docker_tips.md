@@ -25,8 +25,19 @@ ubuntu              latest              549b9b86cb8d        11 days ago         
 centos              latest              0f3e07c0138f        2 months ago        220MB
 ```
 
-
 **docker commit** commit the container to the repository and you can **tag** a new name for your own
+```console
+D:\>docker commit rezmi mylab:nlp
+sha256:22967a1cadf9fef3b0c7d9e02726a1862d9f445dd698439cc72e121c0be1a173
+
+D:\>docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mylab               nlp                 22967a1cadf9        4 seconds ago       657MB
+mylab               latest              a237101b85cf        9 hours ago         642MB
+ubuntu              latest              549b9b86cb8d        11 days ago         64.2MB
+centos              latest              0f3e07c0138f        2 months ago        220MB
+```
+
 
 **docker ps -a** list all docker *containers*, use the -l flag for latest
 ```console
@@ -49,6 +60,17 @@ D:\python>docker ps -l
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
 b1d48aa709c3        ubuntu:latest       "/bin/bash"         8 seconds ago       Exited (0) 6 seconds ago                       happy_taussig
 ```
+
+**docker run -v** attach a local volume (Example below, mapping d:\python to /home/python), and name container rezmi
+```console
+D:\python>docker run -it -v d:\python:/home/python --name rezmi mylab
+```
+
+**docker run -p** maps local port with remote port
+```console
+D:\python>docker run -it -v d:\python:/home/python -p 8888:8888 --name rezmi mylab
+```
+
 
 **docker rename [container] [new_name]** rename the name of a container
 ```console
