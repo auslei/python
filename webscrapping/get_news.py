@@ -29,7 +29,7 @@ def get_content(url):
     return html
 
 # get all the new in the top news
-def read_news(_base_url, sleep_time=10):
+def read_news(_base_url, sleep_time=10000):
     import re
     regex = re.compile("story-block.*")    
 
@@ -69,3 +69,6 @@ def incrental_load(file_path, to_pickle = True):
     if to_pickle:
         df.to_pickle(file_path)
     return df
+
+
+# %%
