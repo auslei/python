@@ -1,0 +1,14 @@
+FROM centos:latest
+ENV key=value
+RUN yum install -y python3
+RUN pip3 install --user jupyter
+RUN pip3 install --user pandas
+RUN pip3 install --user sklearn
+RUN pip3 install --user matplotlib
+RUN pip3 install --user jupyterlab
+RUN mkdir project
+RUN ~/.local/bin/jupyter notebook --generate-config
+COPY . project
+EXPOSE 8888
+RUN ls ~/.local/bin
+CMD ["~/.local/bin/jupyter", "lab", "--ip='0.0.0.0'", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.password=","'sha1:ddbb552394c0:d7c0579d98eb351175bc7a574cc9bc61cda94e70'", "project"]
