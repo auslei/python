@@ -7,7 +7,7 @@ docker build -t "pyml" .
 
 To start docker container from image:
 <pre><code>
-docker run -p 8888:8888 -name lab1 pyml
+docker run -p 8888:8888 --name lab1 pyml
 </code></pre>
 
 To copy files from container
