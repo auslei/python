@@ -1,14 +1,12 @@
 FROM centos:latest
-ENV PATH="~/.local/bin;${PATH}"
+ENV PATH="/root/.local/bin;${PATH}"
+ADD pip.conf /root/.pip/pip.conf
+ADD requirements.txt /project/requirements.txt
 RUN yum install -y python3
-RUN pip3 install --user jupyter
-RUN pip3 install --user pandas
-RUN pip3 install --user sklearn
-RUN pip3 install --user matplotlib
-RUN pip3 install --user jupyterlab
-RUN mkdir project
+RUN pip3 install -r /project/requirements.txt
 RUN jupyter notebook --generate-config
-COPY . project
+COPY interview.ipynb /project/
+ADD start.sh /project/start.sh
+RUN chmod 777 /project/start.sh
 EXPOSE 8888
-RUN ls ~/.local/bin
-CMD ["jupyter", "lab", "--ip='0.0.0.0'", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.password=","'sha1:ddbb552394c0:d7c0579d98eb351175bc7a574cc9bc61cda94e70'"]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.password='sha1:ddbb552394c0:d7c0579d98eb351175bc7a574cc9bc61cda94e70'", "/project/."]
