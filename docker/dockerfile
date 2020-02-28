@@ -5,7 +5,7 @@ ADD requirements.txt /project/requirements.txt
 RUN yum install -y python3
 RUN pip3 install -r /project/requirements.txt
 RUN jupyter notebook --generate-config
-COPY interview.ipynb /project/
+COPY *.ipynb /project/
 ADD start.sh /project/start.sh
 RUN chmod 777 /project/start.sh
 EXPOSE 8888

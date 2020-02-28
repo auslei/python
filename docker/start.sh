@@ -1,0 +1,1 @@
+jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.password='sha1:ddbb552394c0:d7c0579d98eb351175bc7a574cc9bc61cda94e70' /project/.
