@@ -50,7 +50,7 @@ def read_news(_base_url, sleep_time=10000):
                 stories['timestamp'].append(f"{ts.txt} {ts.find('span', {'class': 'time'}).text}")
             else:
                 stories['timestamp'].append(datetime.now().strftime("Last updated %B %d, %Y %H:%M:%S AEDT"))
-            print(f"sleeping for {sleep_time} seconds...")
+            #print(f"sleeping for {sleep_time} seconds...")
             
 
     return pd.DataFrame(stories)
