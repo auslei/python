@@ -1,0 +1,6 @@
+*.jpg
+*.h5
+*.csv
+*log*
+PetImages
+*.pickle
