@@ -1,0 +1,8 @@
+nltk
+sklearn
+pandas
+ipykernel
+matplotlib
+urllib3
+bs4
+gensim
