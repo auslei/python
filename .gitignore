@@ -6,3 +6,9 @@ venv
 .vscode
 *.exe
 .ipynb*
+*.csv
+*.pkl
+*.dot
+*.dict
+*.out
+*.mm*
